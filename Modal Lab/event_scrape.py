@@ -89,7 +89,7 @@ def get_pages(path):
         pages.extend(md_header_splits)
     return pages
 
-@stub.function(schedule=modal.Period(weeks=1), image=image)
+@stub.function(schedule=modal.Period(days=1), image=image)
 def timed_scrape():
     curDate = date.today()
     recent_evts = get_events(curDate)
