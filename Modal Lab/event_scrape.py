@@ -87,6 +87,10 @@ def get_pages(path):
         print(len(md_header_splits))
 
         pages.extend(md_header_splits)
+
+    for page in pages:
+        idx = page.page_content.find("Start time: ")
+        page.metadata['date'] = page.page_content[idx+12:idx+22]
     return pages
 
 @stub.function(schedule=modal.Period(days=1), image=image)
