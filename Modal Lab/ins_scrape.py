@@ -2,7 +2,7 @@ import modal
 import os
 
 stub = modal.Stub(name="link-scraper")
-image = modal.Image.debian_slim().pip_install("apify-client", "spacy", "python-dateutil", "langchain", "supabase")
+image = modal.Image.debian_slim().pip_install("apify-client", "spacy", "python-dateutil", "langchain", "supabase", "openai", "tiktoken")
 
 club_ins_url = [
     'https://www.instagram.com/rice.csa/',
