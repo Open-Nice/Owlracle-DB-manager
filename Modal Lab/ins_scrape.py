@@ -178,13 +178,7 @@ def get_ins():
                 # Check if event is in the future
                 if parsed_date.date() > datetime.datetime.now().date():
                     meta_data = {'date': parsed_date.strftime("%Y-%m-%d"), 'source': url}
-                    content = f"""\
-                    Event name: {organizer}'s event
-                    Organizer: {organizer}
-                    Description: {caption}
-                    Time: {parsed_date.strftime("%Y-%m-%d")}
-                    Website: {url}
-                    """
+                    content = f"Event name: {organizer}'s event\nOrganizer: {organizer}\nDescription: {caption}\nTime: {parsed_date.strftime('%Y-%m-%d')}\nWebsite: {url}"
                     page = Document(page_content=content)
                     # page.page_content = content
                     page.metadata = meta_data
