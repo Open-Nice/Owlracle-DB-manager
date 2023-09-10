@@ -143,9 +143,10 @@ def get_ins():
     pages = []
     # Fetch and print Actor results from the run's dataset (if there are any)
     for item in client.dataset(run["defaultDatasetId"]).iterate_items():
-        if ('caption' not in item) or ('url' not in item) or ('timestamp' not in item):
+        if ('caption' not in item) or ('url' not in item) or ('timestamp' not in item) or ('ownerFullName' not in item):
             continue
 
+        organizer = item['ownerFullName']
         caption = item['caption']
         url = item['url']
         publish_date = item['timestamp']
@@ -177,7 +178,13 @@ def get_ins():
                 # Check if event is in the future
                 if parsed_date.date() > datetime.datetime.now().date():
                     meta_data = {'date': parsed_date.strftime("%Y-%m-%d"), 'source': url}
-                    content = caption
+                    content = f"""\
+                    Event name: {organizer}'s event
+                    Organizer: {organizer}
+                    Description: {caption}
+                    Time: {parsed_date.strftime("%Y-%m-%d")}
+                    Website: {url}
+                    """
                     page = Document(page_content=content)
                     # page.page_content = content
                     page.metadata = meta_data
