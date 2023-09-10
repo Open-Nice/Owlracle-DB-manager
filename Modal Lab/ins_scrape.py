@@ -1,8 +1,8 @@
 import modal
 import os
 
-stub = modal.Stub(name="link-scraper")
-image = modal.Image.debian_slim().pip_install("apify-client", "spacy", "python-dateutil", "langchain", "supabase")
+stub = modal.Stub(name="Instagram")
+image = modal.Image.debian_slim().pip_install("apify-client", "spacy", "python-dateutil", "langchain", "supabase", "openai", "tiktoken")
 
 club_ins_url = [
     'https://www.instagram.com/rice.csa/',
@@ -98,6 +98,7 @@ club_ins_url = [
 ]
 
 if stub.is_inside():
+    import openai
     from apify_client import ApifyClient
     import spacy
     from dateutil.parser import parse

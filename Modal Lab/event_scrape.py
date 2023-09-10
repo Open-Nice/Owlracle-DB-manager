@@ -9,7 +9,7 @@ import modal
 
 CLEANER = re.compile("<.*?>")
 
-stub = modal.Stub(name="link-scraper")
+stub = modal.Stub(name="Event")
 image = modal.Image.debian_slim().pip_install("langchain", "supabase", "openai", "tiktoken", "python-dotenv")
 
 if stub.is_inside():
@@ -22,7 +22,7 @@ if stub.is_inside():
 if modal.is_local():
     from dotenv import load_dotenv
     load_dotenv()
-    stub.data_dict = modal.Dict({
+    stub.data_dict = modal.Dict.new({
         "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY"),
         "SUPABASE_URL": os.getenv("SUPABASE_URL"),
         "SUPABASE_SERVICE_KEY": os.getenv("SUPABASE_SERVICE_KEY")
