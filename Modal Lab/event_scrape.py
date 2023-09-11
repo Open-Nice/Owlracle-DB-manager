@@ -10,13 +10,15 @@ import modal
 CLEANER = re.compile("<.*?>")
 
 stub = modal.Stub(name="Event")
-image = modal.Image.debian_slim().pip_install("langchain", "supabase", "openai", "tiktoken", "python-dotenv")
+image = modal.Image.debian_slim().pip_install("langchain", "supabase", "openai", "tiktoken", "python-dotenv", "pytz")
 
 if stub.is_inside():
     from supabase import create_client, Client
     from langchain.embeddings.openai import OpenAIEmbeddings
     from langchain.text_splitter import MarkdownHeaderTextSplitter
     from langchain.vectorstores import SupabaseVectorStore
+    from datetime import datetime
+    import pytz
 
 
 if modal.is_local():
@@ -39,6 +41,12 @@ def get_events(curDate):
 
 @stub.function()
 def write_to_md(evts, path):
+    # Convert UTC time string to CDT
+    def convert_utc_to_cdt(utc_time_str):
+        utc_dt = datetime.fromisoformat(utc_time_str.replace("Z", "+00:00"))
+        cdt_zone = pytz.timezone('America/Chicago')
+        return utc_dt.astimezone(cdt_zone)
+
     with open(path, "w", encoding="utf-8") as f:
         for evt in evts:
             id = evt["id"]
@@ -48,9 +56,13 @@ def write_to_md(evts, path):
             descrip = re.sub(CLEANER, '', evt['description']).replace('\r', '').replace('\n', ' ').replace('&nbsp;',
                                                                                                            '').strip()
             f.write(f"Description: {descrip}\n")
+
+            start_cdt = convert_utc_to_cdt(evt['startsOn'])
+            end_cdt = convert_utc_to_cdt(evt['endsOn'])
+
             f.write(f"Location: {evt['location']}\n")
-            f.write(f"Start time: {evt['startsOn']}\n")
-            f.write(f"End time: {evt['endsOn']}\n")
+            f.write(f"Start time: {start_cdt}\n")
+            f.write(f"End time: {end_cdt}\n")
             f.write(f"Website: {website}\n")
             f.write(f"Theme: {evt['theme']}\n")
             if len(evt['categoryNames']) != 0:
