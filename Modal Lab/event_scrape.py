@@ -61,8 +61,8 @@ def write_to_md(evts, path):
             end_cdt = convert_utc_to_cdt(evt['endsOn'])
 
             f.write(f"Location: {evt['location']}\n")
-            f.write(f"Start time: {start_cdt}\n")
-            f.write(f"End time: {end_cdt}\n")
+            f.write(f"Start time: {start_cdt.isoformat()[:-6]}\n") 
+            f.write(f"End time: {end_cdt.isoformat()[:-6]}\n")
             f.write(f"Website: {website}\n")
             f.write(f"Theme: {evt['theme']}\n")
             if len(evt['categoryNames']) != 0:
