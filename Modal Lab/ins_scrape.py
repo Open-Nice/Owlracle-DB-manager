@@ -94,7 +94,9 @@ club_ins_url = [
     'https://www.instagram.com/rice_mock/',
     'https://www.instagram.com/ricevolleyball/',
     'https://www.instagram.com/ricewomeninbusiness/',
-    'https://www.instagram.com/rice_womeninstem/'
+    'https://www.instagram.com/rice_womeninstem/',
+
+    'https://www.instagram.com/ricemusiccollective/',
 ]
 
 if stub.is_inside():
