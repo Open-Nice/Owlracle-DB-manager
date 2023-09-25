@@ -97,6 +97,7 @@ club_ins_url = [
     'https://www.instagram.com/rice_womeninstem/',
 
     'https://www.instagram.com/ricemusiccollective/',
+    'https://www.instagram.com/ricesailing/',
 ]
 
 if stub.is_inside():
